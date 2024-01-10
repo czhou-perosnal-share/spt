@@ -29,8 +29,12 @@ def main():
         if args.imp:
             options = read_epic_options(jira,args.imp)
             save_epic_options(options)
-        else:
-            print(load_epic_options())
+        elif args.pretty:
+            options = load_epic_options()
+            print(json.dumps(options, indent=4))
+        elif args.list:
+            options = load_epic_options()
+            print(options)
         
         
             
@@ -54,7 +58,8 @@ def arg_conf():
     
     options_parser = sub_parser.add_parser('options', help='list/import epic options')
     options_parser.add_argument('-i', '--import', dest='imp', help='import epic options by issue key')
-    options_parser.add_argument('-l', '--list', help='list epic options')
+    options_parser.add_argument('-l', '--list', help='list epic options', action='store_true')
+    options_parser.add_argument('-p', '--pretty', help='pretty print', action='store_true')
 
     args = parser.parse_args()
     return args
