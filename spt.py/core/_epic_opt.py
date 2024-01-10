@@ -1,4 +1,4 @@
-from core.Fields import Fields
+from core import Fields
 import jira
 
 

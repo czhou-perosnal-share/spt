@@ -26,12 +26,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="core\__init__.py" />
     <Compile Include="__main__.py" />
     <None Include="conf\account.py.sample" />
     <Compile Include="conf\account.py" />
-    <Compile Include="core\EpicOptions.py" />
-    <Compile Include="core\Fields.py" />
-    <Compile Include="core\Planner.py" />
+    <Compile Include="core\_epic_opt.py" />
+    <Compile Include="core\_fields.py" />
+    <Compile Include="core\_planner.py" />
     <Compile Include="spt.py" />
   </ItemGroup>
   <ItemGroup>

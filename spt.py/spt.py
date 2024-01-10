@@ -1,14 +1,11 @@
 # https://jira.readthedocs.io/
 
-from ast import Not
 from genericpath import exists
-import json
 from jira import JIRA
 from conf import account
-from core.EpicOptions import EpicOptions 
-from core.Planner import Planner
-from core.Fields import Fields
+from core import Planner, EpicOptions, Fields
 import argparse
+import json
 
 
     
@@ -17,6 +14,8 @@ def main():
 
     jiraOptions = {'server': account.server} 
     jira = JIRA(options=jiraOptions, basic_auth=(account.user, account.token)) 
+
+    jiraPlanner = Planner(jira)
 
     if not exists('./data/options.json'):
        if args.command != 'options' or not args.imp:
