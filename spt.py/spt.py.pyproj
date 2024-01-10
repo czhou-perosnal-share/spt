@@ -22,18 +22,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="account.py.sample" />
-    <Compile Include="account.py" />
-    <Compile Include="lib\EpicOptions.py" />
-    <Compile Include="lib\Fields.py" />
-    <Compile Include="lib\Planner.py" />
+    <None Include="conf\account.py.sample" />
+    <Compile Include="conf\account.py" />
+    <Compile Include="core\EpicOptions.py" />
+    <Compile Include="core\Fields.py" />
+    <Compile Include="core\Planner.py" />
     <Compile Include="spt.py.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="lib\" />
+    <Folder Include="core\" />
+    <Folder Include="conf\" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">

@@ -1,4 +1,4 @@
-from lib.EpicOptions import EpicOptions
+from core.EpicOptions import EpicOptions
 
 class Planner(object):
     def __init__(self, jira):

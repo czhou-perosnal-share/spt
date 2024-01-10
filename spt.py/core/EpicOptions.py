@@ -1,7 +1,4 @@
-from importlib import invalidate_caches
-from tkinter import SE
-from lib.Fields import Fields
-import json
+from core.Fields import Fields
 import jira
 
 class EpicOptions(object):
@@ -46,7 +43,6 @@ class EpicOptions(object):
             if field:
                 fid = field['id']
                 value = issue.fields.__dict__[fid]
-                print(type(value))
                 epic_options[fid] = self.__get_json_value(value)        
         return epic_options
     
