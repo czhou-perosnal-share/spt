@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>481a9676-1cd4-41ba-8567-17964dd78162</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>spt.py.py</StartupFile>
+    <StartupFile>spt.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -12,6 +12,10 @@
     <Name>spt.py</Name>
     <RootNamespace>spt.py</RootNamespace>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>make -p SEAR -r RDSP-5311,RDSP-5306</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,12 +26,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="__main__.py" />
     <None Include="conf\account.py.sample" />
     <Compile Include="conf\account.py" />
     <Compile Include="core\EpicOptions.py" />
     <Compile Include="core\Fields.py" />
     <Compile Include="core\Planner.py" />
-    <Compile Include="spt.py.py" />
+    <Compile Include="spt.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />

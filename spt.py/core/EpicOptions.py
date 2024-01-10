@@ -1,6 +1,7 @@
 from core.Fields import Fields
 import jira
 
+
 class EpicOptions(object):
     EPIC_HEAD = '[SPT]'
     DefaultEpicOptions = {
@@ -16,6 +17,7 @@ class EpicOptions(object):
             'customfield_12423': '2024-05-31',     # EndDate: '2024-05-31'
         }
 
+    @staticmethod
     def get_epic_options(project, release):
         epic_options = {
             'project': {'key': project},
@@ -30,14 +32,10 @@ class EpicOptions(object):
     
     def __init__(self,jira):
         self.jira = jira
-
-    def get_epic_options(self,project,release):
-        return EpicOptions.get_epic_options(project,release)
     
-    def get_epic_options_from_issue(self, key, display_names):
+    def get_epic_options_from_issue(self, issue, display_names):
         epic_options = {}
         fields = Fields(self.jira)
-        issue = self.jira.issue(key)
         for name in display_names:
             field = fields.get_field(name)
             if field:
