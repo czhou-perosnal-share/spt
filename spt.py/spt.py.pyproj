@@ -25,6 +25,7 @@
     <None Include="account.py.sample" />
     <Compile Include="account.py" />
     <Compile Include="lib\EpicOptions.py" />
+    <Compile Include="lib\Fields.py" />
     <Compile Include="lib\Planner.py" />
     <Compile Include="spt.py.py" />
   </ItemGroup>
