@@ -1,8 +1,8 @@
 # https://jira.readthedocs.io/
 
+from ast import Not
+from genericpath import exists
 import json
-from re import S
-import re
 from jira import JIRA
 from conf import account
 from core.EpicOptions import EpicOptions 
@@ -17,6 +17,12 @@ def main():
 
     jiraOptions = {'server': account.server} 
     jira = JIRA(options=jiraOptions, basic_auth=(account.user, account.token)) 
+
+    if not exists('./data/options.json'):
+       if args.command != 'options' or not args.imp:
+        print('[Error] Cannot find options data !')
+        print('Please run "spt options --import <key>" to import epic options first!')
+        return
 
 
     if args.command == 'copy':
