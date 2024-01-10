@@ -1,10 +1,13 @@
 # https://jira.readthedocs.io/
 
+import json
 from re import S
+import re
 from jira import JIRA
 from conf import account
 from core.EpicOptions import EpicOptions 
 from core.Planner import Planner
+from core.Fields import Fields
 import argparse
 
 
@@ -15,17 +18,29 @@ def main():
     jiraOptions = {'server': account.server} 
     jira = JIRA(options=jiraOptions, basic_auth=(account.user, account.token)) 
 
+
     if args.command == 'copy':
         copy_epic_options(jira, args.src, args.dest)
     elif args.command == 'make':
         make_epics(jira, args.project, args.release.split(','), args.update)
+    elif args.command == 'fields':
+        print(list_fields())
+    elif args.command == 'options':
+        if args.imp:
+            options = read_epic_options(jira,args.imp)
+            save_epic_options(options)
+        else:
+            print(load_epic_options())
+        
+        
+            
 
 def arg_conf():
     parser = argparse.ArgumentParser(description='Seismic Planning Tookit')
     sub_parser = parser.add_subparsers(dest='command')
     sub_parser.required = True
     
-    make_parser = sub_parser.add_parser('make', help='make epics')
+    make_parser = sub_parser.add_parser('make', help='make child epics')
     make_parser.add_argument('-r', '--release', help='release keys')
     make_parser.add_argument('-p', '--project', help='project key')
     make_parser.add_argument('-u', '--update', help='update existed epic', action='store_true')
@@ -35,31 +50,47 @@ def arg_conf():
     copy_parser.add_argument('-d', '--dest', help='destination issue key')
     #copy_parser.add_argument('-f', '--fields', help='fields to copy')
     
+    fields_parser = sub_parser.add_parser('fields', help='list all fields')
+    
+    options_parser = sub_parser.add_parser('options', help='list/import epic options')
+    options_parser.add_argument('-i', '--import', dest='imp', help='import epic options by issue key')
+    options_parser.add_argument('-l', '--list', help='list epic options')
+
     args = parser.parse_args()
     return args
     
- 
+def list_fields():
+    file = open('./conf/fields.txt', 'r')
+    fields = [line.strip() for line in file.readlines() if line.strip() != '']
+    return fields
 
-def copy_epic_options(jira, src, dest):
-    options = EpicOptions(jira)
-    fields = [
-        'Target Release Season',
-        'Strategic Area', 
-        'Group Team', 
-        'Scrum Team', 
-        'Working Period(s)',
-        'Start date',
-        'End date'
-        ]
+def load_epic_options():
+    file = open('./data/options.json', 'r')
+    options = json.load(file)
+    return options
 
+def save_epic_options(options):
+    file = open('./data/options.json', 'w')
+    json.dump(options, file, indent=4)
+    file.close()
+    print('Options are saved to {}'.format('./data/options.json')) 
+
+def read_epic_options(jira, src):
+    fields = list_fields()  
     src_issue = jira.issue(src)
-    print('Retriving Source Info... Key:{}  Summary:{}'.format(src_issue.key, src_issue.fields.summary))    
+    options = EpicOptions(jira)
+    
+    print('Retriving Source Info... Key:{}  Summary:{}'.format(src_issue.key, src_issue.fields.summary))  
     issue_opts = options.get_epic_options_from_issue(src_issue, fields)
+    return issue_opts
+    
+
+def copy_epic_options(jira, src, dest):     
+    issue_opts = load_epic_options(jira, src)
+ 
     jiraPlanner = Planner(jira)
     jiraPlanner.update_child_epic(dest, issue_opts)
     
-
-
     
 def make_epics(jira, project, release_list, update):
     # project = "SEAR"

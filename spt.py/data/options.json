@@ -1,0 +1,31 @@
+{
+    "customfield_12496": {
+        "self": "https://seismic.atlassian.net/rest/api/2/customFieldOption/14162",
+        "value": "FY25 / Spring",
+        "id": "14162"
+    },
+    "customfield_12394": {
+        "self": "https://seismic.atlassian.net/rest/api/2/customFieldOption/12486",
+        "value": "Content Discovery",
+        "id": "12486"
+    },
+    "customfield_12395": {
+        "self": "https://seismic.atlassian.net/rest/api/2/customFieldOption/12244",
+        "value": "Search",
+        "id": "12244"
+    },
+    "customfield_12481": {
+        "self": "https://seismic.atlassian.net/rest/api/2/customFieldOption/12562",
+        "value": "Search",
+        "id": "12562"
+    },
+    "customfield_12491": [
+        {
+            "self": "https://seismic.atlassian.net/rest/api/2/customFieldOption/12662",
+            "value": "FY25 Spring",
+            "id": "12662"
+        }
+    ],
+    "customfield_12127": "2024-02-01",
+    "customfield_12423": "2024-05-31"
+}

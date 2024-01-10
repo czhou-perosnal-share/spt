@@ -1,24 +1,24 @@
-from core.EpicOptions import EpicOptions
-
 class Planner(object):
+    EPIC_PREFIX = '[SPT]'    
+
     def __init__(self, jira):
         self.jira = jira
    
 
-    def make_multiple_epics(self, project, release_list, update = False):
+    def make_multiple_epics(self, project, release_list, options, update = False):
         for key in release_list:
             release = self.jira.issue(key)
             print('Checking Release... Key:{}  Summary:{}'.format(release.key, release.fields.summary)) 
-            self.make_single_epic(project, release, update)
+            self.make_single_epic(project, release, options, update)
             print('') 
 
 
-    def make_single_epic(self, project, release, update = False):
+    def make_single_epic(self, project, release, options, update = False):
         
-        epic_options = EpicOptions.get_epic_options(project,release)
+        epic_options = self.get_epic_options(project,release,options)
     
         for link in release.fields.issuelinks:
-            if hasattr(link,'outwardIssue') and EpicOptions.EPIC_HEAD in link.outwardIssue.fields.summary:
+            if hasattr(link,'outwardIssue') and Planner.EPIC_PREFIX in link.outwardIssue.fields.summary:
                 issue = link.outwardIssue
                 print('Child Epic is existed. Key:{}  Summary:{}'.format(issue.key, issue.fields.summary))    
                      
@@ -31,6 +31,17 @@ class Planner(object):
                 
         self.create_child_epic(release, epic_options)
 
+    def get_epic_options(self, project, release, options):
+        epic_options = {
+            'project': {'key': project},
+            'summary': "{} {}".format(Planner.EPIC_PREFIX, release.fields.summary),
+        }
+
+        #copy options
+        for key in options:
+            epic_options[key] = options[key]
+        
+        return epic_options  
 
     def create_child_epic(self, release, epic_options):   
         new_epic = self.jira.create_issue(fields = epic_options)
