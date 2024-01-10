@@ -15,8 +15,6 @@ def main():
     jiraOptions = {'server': account.server} 
     jira = JIRA(options=jiraOptions, basic_auth=(account.user, account.token)) 
 
-    jiraPlanner = Planner(jira)
-
     if not exists('./data/options.json'):
        if args.command != 'options' or not args.imp:
         print('[Error] Cannot find options data !')
