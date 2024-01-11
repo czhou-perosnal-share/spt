@@ -1,4 +1,4 @@
-from core import Fields
+import core
 import jira
 
 
@@ -9,7 +9,7 @@ class EpicOptions(object):
     
     def get_epic_options_from_issue(self, issue, display_names):
         epic_options = {}
-        fields = Fields(self.jira)
+        fields = core.Fields(self.jira)
         for name in display_names:
             field = fields.get_field(name)
             if field:

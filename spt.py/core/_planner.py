@@ -12,7 +12,6 @@ class Planner(object):
             self.make_single_epic(project, release, options, update)
             print('') 
 
-
     def make_single_epic(self, project, release, options, update = False):
         
         epic_options = self.get_epic_options(project,release,options)
@@ -35,6 +34,9 @@ class Planner(object):
         epic_options = {
             'project': {'key': project},
             'summary': "{} {}".format(Planner.EPIC_PREFIX, release.fields.summary),
+            'issuetype': {'name': 'Epic'},
+            'customfield_12492': {'id':'12699'},   # DeliveryType: 'Driving'
+            'description': 'built from seismic planing tools',
         }
 
         #copy options

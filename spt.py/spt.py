@@ -45,7 +45,7 @@ def main():
 def arg_conf():
     parser = argparse.ArgumentParser(description='Seismic Planning Tookit')
     sub_parser = parser.add_subparsers(dest='command')
-    sub_parser.required = True
+    #sub_parser.required = True
     
     make_parser = sub_parser.add_parser('make', help='make child epics')
     make_parser.add_argument('-r', '--release', help='release keys')
@@ -94,7 +94,7 @@ def read_epic_options(jira, src):
     
 
 def copy_epic_options(jira, src, dest):     
-    issue_opts = load_epic_options(jira, src)
+    issue_opts = read_epic_options(jira, src)
  
     jiraPlanner = Planner(jira)
     jiraPlanner.update_child_epic(dest, issue_opts)
@@ -104,8 +104,10 @@ def make_epics(jira, project, release_list, update):
     # project = "SEAR"
     # release_list = ['RDSP-5311','RDSP-5306']
 
+    options = load_epic_options()
+
     jiraPlanner = Planner(jira)
-    jiraPlanner.make_multiple_epics(project, release_list, update)
+    jiraPlanner.make_multiple_epics(project, release_list, options, update)
 
     
 if __name__ == "__main__":
